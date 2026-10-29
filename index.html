@@ -1,18 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DosAmigo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imps' Reign | The Legacy of Fire and Ice</title>
+    <style>
+        /* Modern CSS Reset & Variables */
+        :root {
+            /* These colors are sampled directly from your logo! */
+            --logo-ice-cyan: #0ff; /* The cyan core of "Imps" */
+            --logo-hell-red: #d61c28; /* The vibrant red of "Reign" */
+            --accent-gold: #ffffff; /* The crown gold */
+            
+            --bg-deep-dark: #07070a;
+            --bg-card: #14141a;
+            --text-light: #f5f5f7;
+            --text-muted: #8e8e93;
+            --main-font: 'IM Fell English', serif; /* Use a gothic/historical font */
+            --body-font: 'Source Sans 3', sans-serif;
+        }
+
+        /* Essential Gothic/Modern Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Source+Sans+3:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep-dark);
+            color: var(--text-light);
+            font-family: var(--body-font);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Advanced Navigation */
+        header {
+            display: flex;
+            justify-content: center; /* Center navigation items */
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(7, 7, 10, 0.95), rgba(7, 7, 10, 0));
+            backdrop-filter: blur(5px);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--logo-ice-cyan), var(--logo-hell-red), transparent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::before {
+            content: '[';
+            position: absolute;
+            left: -12px;
+            opacity: 0;
+            color: var(--logo-ice-cyan);
+            transition: opacity 0.3s ease;
+        }
+        nav a::after {
+            content: ']';
+            position: absolute;
+            right: -12px;
+            opacity: 0;
+            color: var(--logo-hell-red);
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        nav a:hover::before,
+        nav a:hover::after {
+            opacity: 1;
+        }
+
+        /* Hero Section (THE BIG REVEAL) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Deeply layered background with parallax potential */
+        .hero-bg-base {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* 1. Base dark fantasy image (Replace with your actual image path) */
+            background-image: url('https://images.unsplash.com/photo-1549117650-7053e1471644?q=80&w=1920&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center bottom;
+            opacity: 0.2; /* Dims the base image */
+            z-index: -2;
+        }
+        .hero-bg-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* 2. Patterned overlay (like cracked stone or fire texture) */
+            background-image: url('https://www.transparenttextures.com/patterns/dark-dotted.png');
+            opacity: 0.4;
+            z-index: -1;
+            /* 3. A deep circular gradient to focus the center */
+            background-color: transparent;
+            background-image: radial-gradient(circle at center, transparent 0%, var(--bg-deep-dark) 90%);
+        }
+
+        /* The Main Logo */
+        .main-logo-container {
+            width: 70%; /* Responsive width */
+            max-width: 800px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            perspective: 1000px; /* For subtle rotation/shadow effects */
+        }
+
+        .main-logo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 0 40px rgba(0, 255, 255, 0.4)); /* Initial Cyan glow */
+            animation: fadeInLogo 1.2s ease-out, constantGlow 4s ease-in-out infinite alternate;
+            transform: translateZ(20px);
+        }
+
+        /* Subtitle using the sampled gold color */
+        .hero p {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease-out 0.8s both;
+            text-shadow: 0 0 10px rgba(255, 207, 64, 0.5);
+        }
+
+        /* Custom "Enter" Button */
+        .cta-btn {
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            color: white;
+            background: linear-gradient(135deg, var(--logo-ice-cyan), var(--logo-hell-red));
+            border: none;
+            border-radius: 5px; /* Angled corners */
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 0 25px rgba(214, 28, 40, 0.4);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 1.2s both;
+            text-decoration: none;
+            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0% 100%);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 50px rgba(214, 28, 40, 0.8);
+            letter-spacing: 3px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 8rem 10%;
+            background-color: #0c0c0f; /* Slightly lighter than pure black */
+            position: relative;
+        }
+
+        /* Subtle divider using colors sampled from the logo */
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; width: 80%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--logo-ice-cyan), var(--logo-hell-red), transparent);
+            filter: blur(1px);
+        }
+
+        .content-section h2 {
+            font-family: var(--main-font); /* Gothic Font */
+            font-size: 3.5rem;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, white, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Three Column Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 4rem 2rem;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            clip-path: polygon(20px 0, 100% 0, calc(100% - 20px) 100%, 0% 100%);
+        }
+
+        /* Color alternate features based on the logo split */
+        .feature-card:nth-child(1) { border-top: 3px solid var(--logo-ice-cyan); }
+        .feature-card:nth-child(2) { border-top: 3px solid var(--logo-hell-red); }
+        .feature-card:nth-child(3) { border-top: 3px solid var(--logo-ice-cyan); }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            border-color: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .feature-card h3 {
+            font-family: var(--main-font);
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Minimal Footer */
+        footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: #07070a;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        footer a:hover {
+            color: white;
+        }
+
+        /* Custom Keyframe Animations */
+        @keyframes fadeInLogo {
+            from { opacity: 0; transform: translateY(-50px) translateZ(20px); }
+            to { opacity: 1; transform: translateY(0) translateZ(20px); }
+        }
+
+        @keyframes constantGlow {
+            0% { filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.3)); }
+            100% { filter: drop-shadow(0 0 45px rgba(214, 28, 40, 0.6)); } /* Glow cycles to Red */
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .feature-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0 5%; }
+            .hero h1 { font-size: 4rem; }
+            .main-logo-container { width: 90%; }
+        }
+        @media (max-width: 768px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .feature-card { padding: 3rem 1.5rem; }
+        }
+    </style>
 </head>
-  <body>
-    <link rel="stylesheet" href="styles.css">
-    <h1>DosAmigo</h1>
-    <p> This is a DhabaDecker & Chunksy Project</p>
-    <a href="https://www.dhabadecker.com/">DhahaDecker</a>
-    <br>
-    <br>
-    <a href="https://www.chunksy.net/">Chunksy</a>
-    <p>More updates coming soon</p>
-  </body>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="https://impsreign.com/thegame.html">The Game</a></li>
+                <li><a href="https://impsreign.com/themanga.html">The Manga</a></li>
+              
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="realm">
+        <div class="hero-bg-base"></div>
+        <div class="hero-bg-overlay"></div>
+
+        <div class="main-logo-container">
+            <img src="https://impsreign.com/IRLOGO1b.png" alt="Imps' Reign - Fire and Ice">
+        </div>
+
+        <p>No kingdom's too big, no imp is too small!</p>
+      
+        <a href="https://impsreign.com/thegame.html" class="cta-btn">Play the game!</a>
+    </section>
+
+    <section class="content-section" id="lore">
+        <h2>Forge Your Destiny</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>The Frozen Legacy</h3>
+                <p>The Imps' core is forged from ancient, unyielding ice. Harness the crystalline power that defines the elite. Build your stronghold and claim the North.</p>
+            </div>
+            <div class="feature-card">
+                <h3>The Molten Empire</h3>
+                <p>Your reign begins now. We rule with passion, ambition, and a spark of infernal fire. Conquer the chaos and write your name in the stone.</p>
+            </div>
+            <div class="feature-card">
+                <h3>The Golden Rule</h3>
+                <p>Ours is the crown that bridges two forces. We do not just exist; we dominate. Gather your horde and make the world remember the Reign.</p>
+            </div>
+             <div class="feature-card">
+                <h3>Contact</h3>
+                <p>Questions?</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 IMPSREIGN.COM. Site forged by <a href="#">Your Dev Name</a>.</p>
+    </footer>
+
+</body>
 </html>
